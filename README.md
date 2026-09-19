@@ -21,4 +21,4 @@ Header/footer markup is shared manually between the three HTML pages. Theme and 
 
 The visual starting points were [Martin Sit's portfolio](https://martinsit.ca/) and [its repository](https://github.com/martin226/v2), with Apple-inspired typography and restrained surfaces. This implementation is independently authored; no reference source or personal assets were copied. The AI mark, blue palette, and motion follow Shishir's requested personal direction.
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for Docker, Dokploy, Oracle Cloud, and domain setup. Nothing has been published or provisioned yet.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for Docker, Dokploy, Oracle Cloud, and domain setup. The source is pushed to GitHub and installed on Casterly Rock using Nginx. See the deployment guide for current public-access and HTTPS status.

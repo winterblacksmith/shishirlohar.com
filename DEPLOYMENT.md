@@ -1,5 +1,21 @@
 # Deploy to shishirlohar.com
 
+## Current server deployment
+
+The portfolio is installed on Casterly Rock (`opc@129.80.109.207`, Oracle Linux 9) using its existing Nginx service. This VM has about 1 GB RAM, so Dokploy was deferred with the owner's approval. No Docker installation or VM resize was performed.
+
+- Repository: https://github.com/winterblacksmith/shishirlohar.com (private, branch `main`).
+- Releases: `/var/www/shishirlohar.com/releases/`; active symlink: `/var/www/shishirlohar.com/current`.
+- Nginx virtual host: `/etc/nginx/conf.d/shishirlohar.com.conf`. The original default configuration remains intact.
+- Server-local checks passed for the homepage, projects, experience, JavaScript, PDF, and 404 handling.
+- Public HTTP/HTTPS currently time out. The VM firewall allows HTTP and HTTPS; OCI subnet security-list/NSG ingress still needs inspection. HTTPS certificate issuance remains pending public reachability.
+
+For future content updates, commit and push, then run `bash scripts/deploy-nginx.sh`. It uploads only tracked website files, retains prior releases, and atomically changes the active symlink. It uses your local SSH access and requires no GitHub token on the server.
+
+Rollback by pointing `current` at a previous release directory. Nginx reads through that symlink, so content changes do not require a restart.
+
+The Docker/Dokploy setup below is retained for a future larger server.
+
 ## Architecture
 
 Browser → HTTPS / Dokploy Traefik → portfolio Nginx container, port 80.
