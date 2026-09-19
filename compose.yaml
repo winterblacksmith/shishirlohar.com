@@ -1,0 +1,6 @@
+services:
+  portfolio:
+    build: .
+    restart: unless-stopped
+    expose:
+      - "80"
