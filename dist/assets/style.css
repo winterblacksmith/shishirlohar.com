@@ -22,3 +22,16 @@ html[data-motion=paused] .diamond:hover{transform:none}
 html[data-motion=paused] .diamond:hover::before{transform:rotate(45deg);background:var(--strong)}
 html[data-motion=paused] .branch-list li:hover::before{transform:none}
 @media(prefers-reduced-motion:reduce){.diamond:hover{transform:none}.diamond:hover::before{transform:rotate(45deg);background:var(--strong)}.branch-list li:hover::before{transform:none}main a:not(.primary-link):not(.project-link){transition:none}}
+
+/* Shared tab indicator and a staggered rainbow on the home link. */
+header nav{position:relative}
+nav.has-indicator a[aria-current=page]::after{display:none}
+.nav-indicator{position:absolute;left:0;bottom:2px;height:1px;background:var(--strong);pointer-events:none}
+.nav-indicator.ready{transition:transform .38s cubic-bezier(.22,1,.36,1),width .38s cubic-bezier(.22,1,.36,1)}
+.name:hover,.name:focus-visible{color:var(--strong)}
+.name span{transition:color .4s ease}
+.name:hover span,.name:focus-visible span{animation:name-rainbow 3s linear infinite;animation-delay:calc(var(--letter) * .09s)}
+@keyframes name-rainbow{0%,100%{color:var(--strong)}15%{color:#e879a9}30%{color:#e8a35b}45%{color:#a5c95b}60%{color:#55bdba}75%{color:#799dec}90%{color:#bc8de5}}
+html[data-motion=paused] .nav-indicator.ready{transition:none}
+html[data-motion=paused] .name span{animation:none!important}
+@media(prefers-reduced-motion:reduce){.name span{animation:none!important}.nav-indicator.ready{transition:none}}
