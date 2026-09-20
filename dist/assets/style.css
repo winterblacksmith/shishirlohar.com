@@ -8,3 +8,17 @@
 dialog::backdrop{background:rgb(0 0 0 / 72%);backdrop-filter:none}
 .ambient{animation:none}
 .ai-symbol{filter:none;will-change:transform}
+
+/* Small hover responses inspired by the reference site's motion language. */
+.diamond{transition:transform .2s ease}
+.diamond::before{transition:transform .45s cubic-bezier(.2,.8,.2,1),background-color .2s ease}
+.diamond:hover{transform:translateX(4px)}
+.diamond:hover::before{transform:rotate(405deg) scale(1.18);background:var(--accent)}
+.branch-list li::before{transition:transform .2s ease,color .2s ease}
+.branch-list li:hover::before{transform:translateX(3px);color:var(--accent)}
+main a:not(.primary-link):not(.project-link){border-bottom:0;background-image:linear-gradient(var(--strong),var(--strong)),linear-gradient(var(--line),var(--line));background-position:0 100%,0 100%;background-repeat:no-repeat;background-size:0 1px,100% 1px;transition:background-size .35s ease,color .2s ease}
+main a:not(.primary-link):not(.project-link):hover{background-size:100% 1px,100% 1px}
+html[data-motion=paused] .diamond:hover{transform:none}
+html[data-motion=paused] .diamond:hover::before{transform:rotate(45deg);background:var(--strong)}
+html[data-motion=paused] .branch-list li:hover::before{transform:none}
+@media(prefers-reduced-motion:reduce){.diamond:hover{transform:none}.diamond:hover::before{transform:rotate(45deg);background:var(--strong)}.branch-list li:hover::before{transform:none}main a:not(.primary-link):not(.project-link){transition:none}}
