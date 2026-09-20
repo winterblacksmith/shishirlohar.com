@@ -55,7 +55,7 @@ jobs:
           sudo restorecon -RF /var/www/shishirlohar.com
           sudo ln -sfn "$release" /var/www/shishirlohar.com/current.next
           sudo mv -Tf /var/www/shishirlohar.com/current.next /var/www/shishirlohar.com/current
-          curl --fail --silent --show-error -H 'Host: shishirlohar.com' http://127.0.0.1/health
+          curl --fail --silent --show-error --resolve shishirlohar.com:443:127.0.0.1 https://shishirlohar.com/health
           REMOTE
 
       - name: Verify production

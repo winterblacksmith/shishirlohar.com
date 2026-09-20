@@ -23,6 +23,6 @@ sudo restorecon -RF /var/www/shishirlohar.com
 sudo ln -sfn "$release" /var/www/shishirlohar.com/current.next
 sudo mv -Tf /var/www/shishirlohar.com/current.next /var/www/shishirlohar.com/current
 sudo nginx -t
-curl --fail --silent --show-error -H 'Host: shishirlohar.com' http://127.0.0.1/health
+curl --fail --silent --show-error --resolve shishirlohar.com:443:127.0.0.1 https://shishirlohar.com/health
 REMOTE
 printf '\nDeployed revision %s.\n' "$revision"
