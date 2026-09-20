@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shishir DS — A playable portfolio</title>
+  <meta name="description" content="A little nostalgia. A lot of curiosity. Explore Shishir Lohar's software, AI projects, and experience through a DSi-inspired portfolio.">
+  <meta name="theme-color" content="#e9ece9">
+  <link rel="icon" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="./ds.css">
+  <script src="./ds.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#launcher">Skip to app menu</a>
+  <header class="site-header"><a class="wordmark" href="./">shishir<span>DS</span><i></i></a><a class="classic" href="https://shishirlohar.com">Classic portfolio <span>↗</span></a></header>
+  <main>
+    <div class="intro"><p class="eyebrow">A DIFFERENT WAY TO SAY HELLO</p><h1>Small screens. <br>Big ideas.</h1><p>My corner of the internet,<br>with a little more nostalgia.</p><div class="edition"><span>01</span> HANDHELD EDITION</div></div>
+    <section class="console" aria-label="Shishir DS portfolio">
+      <div class="top-shell"><div class="camera" aria-hidden="true"></div><div class="speaker speaker-left" aria-hidden="true">•••<br>•••</div><div class="speaker speaker-right" aria-hidden="true">•••<br>•••</div>
+        <div class="screen top-screen"><div class="status-bar"><span>◉ Shishir</span><time id="clock"></time><span class="battery" aria-label="Decorative full battery">▰▰▰</span></div>
+          <div class="preview" id="preview"><div class="orbit" aria-hidden="true"><div></div><div></div><div></div><b>✦</b></div><p class="eyebrow">SOFTWARE ENGINEER & CURIOUS HUMAN</p><h2 id="preview-title">Hi, I'm Shishir.</h2><p id="preview-copy">Building useful things with software,<br>applied AI, and distributed systems.</p><div class="preview-meta"><span>ATLANTA, GA</span><span>UGA · CLASS OF ’26</span></div></div>
+          <div class="top-bottom"><span>PERSONAL PORTFOLIO</span><span id="app-count">01 / 07</span></div>
+        </div>
+      </div>
+      <div class="hinge" aria-hidden="true"><span></span><b>SHISHIR DS</b><span></span></div>
+      <div class="bottom-shell"><div class="screen bottom-screen">
+        <div class="menu-toolbar"><span>▦ HOME MENU</span><button id="sound" aria-pressed="false" title="Toggle menu sounds">Sound: off</button></div>
+        <div id="launcher" tabindex="-1"><div class="selection-bubble" aria-live="polite"><h2 id="selected-title">About me</h2><p id="selected-subtitle">Meet the person behind the pixels</p></div>
+          <div class="carousel" aria-label="Portfolio apps"><div class="tile-track" id="tile-track"></div></div>
+          <div class="launch-row"><button class="arrow" id="previous" aria-label="Previous app">◀</button><button id="launch">Open <span>Ⓐ</span></button><button class="arrow" id="next" aria-label="Next app">▶</button></div>
+          <div class="position-dots" id="position-dots" aria-hidden="true"></div>
+        </div>
+        <section class="app-view" id="app-view" aria-labelledby="app-title" hidden><header><button id="back">‹ Menu</button><h2 id="app-title" tabindex="-1"></h2><span>Ⓑ</span></header><div class="app-content" id="app-content"></div></section>
+        <div class="screen-footer"><span id="screen-hint">Choose an app to explore</span><span>✧</span></div>
+      </div><div class="hardware-footer"><span><i></i> POWER</span><button id="home" aria-label="Return to home menu">⌂ HOME</button><span>● ●</span></div></div>
+    </section>
+    <aside class="guide"><span class="guide-symbol">✳</span><p>A portfolio you<br>can play with.</p><div><kbd>←</kbd> <kbd>→</kbd><span> choose an app</span></div><div><kbd>enter</kbd><span> open</span></div><div><kbd>esc</kbd><span> go back</span></div><p class="touch-note">Or just tap. It's a touchscreen.</p></aside>
+  </main>
+  <footer class="site-footer"><span>© 2026 SHISHIR LOHAR</span><span>Built for the web. Inspired by a childhood favorite.</span><a href="mailto:shishirlohar@gmail.com">Say hello ↗</a></footer>
+  <noscript><p class="noscript">This interactive edition needs JavaScript. <a href="https://shishirlohar.com">Explore the classic portfolio</a>.</p></noscript>
+</body>
+</html>

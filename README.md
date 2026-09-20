@@ -22,3 +22,11 @@ Header/footer markup is shared manually between the three HTML pages. Theme and 
 The visual starting points were [Martin Sit's portfolio](https://martinsit.ca/) and [its repository](https://github.com/martin226/v2), with Apple-inspired typography and restrained surfaces. This implementation is independently authored; no reference source or personal assets were copied. The AI mark, blue palette, and motion follow Shishir's requested personal direction.
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for Docker, Dokploy, Oracle Cloud, and domain setup. The source is pushed to GitHub and installed on Casterly Rock using Nginx. See the deployment guide for current public-access and HTTPS status.
+
+## DS edition
+
+Preview the separate portfolio at `http://127.0.0.1:4173/ds/`. Source lives in `dist/ds/`; no build or dependencies are needed. Desktop uses two wide screens with a large app carousel. Portrait phones use stacked handheld screens. Click/tap to select an app, select it again or press Open to launch. Arrow keys navigate, Enter opens the focused app, Escape/Home returns, and horizontal swipes change selection. Sounds are synthesized, opt-in, and preference storage gracefully tolerates blocked localStorage. Reduced motion honors the OS setting and the in-app preference.
+
+Research: [ds.css](https://github.com/spiritov/ds.css) is an MIT-licensed browser recreation of DS/DS Lite UI components; [TWiLight Menu++](https://github.com/DS-Homebrew/TWiLightMenu) recreates DSi menus for console hardware. This edition is independently authored to match the supplied DSi/3DS visual references and support a wide desktop carousel. Neither project's code, fonts, sounds, or artwork is bundled.
+
+The current portfolio remains separate. The optional subdomain configuration is in `deployment/ds-nginx-site.conf`; see the deployment guide before enabling it.

@@ -93,3 +93,17 @@ Keep the old site live until the new origin passes checks. This site's canonical
 - [Dokploy application domains](https://docs.dokploy.com/docs/core/domains)
 - [Dokploy Compose domains](https://docs.dokploy.com/docs/core/docker-compose/domains)
 - [Oracle Always Free resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
+
+## Optional DS edition — prepared, not enabled
+
+`dist/ds/` is a separate edition, previewable at `/ds/` and designed to work at the root of `ds.shishirlohar.com`. The existing deployment pipeline includes it with the rest of `dist/` when committed and pushed. The configuration in `deployment/ds-nginx-site.conf` is a separate opt-in virtual host; it is not installed automatically.
+
+To activate the proposed subdomain:
+
+1. Point the `ds` DNS record to the same origin as the main portfolio.
+2. Deploy the new `dist/ds/` files through the usual release pipeline.
+3. Set up an HTTP-only `ds.shishirlohar.com` virtual host with the ACME challenge location, then obtain its certificate with the existing Certbot workflow. Do not load the supplied HTTPS block before its certificate files exist.
+4. Install `deployment/ds-nginx-site.conf` separately, run `sudo nginx -t`, and reload Nginx only on success.
+5. Verify HTTPS, all seven apps, the PDF at `/assets/shishir-lohar-resume.pdf`, and the classic portfolio link. Verify renewal for the new certificate.
+
+No DNS, certificate, or production server changes were made as part of building this edition.

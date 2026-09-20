@@ -4,6 +4,6 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
-    "check": "node --check dist/assets/app.js && node --check dist/assets/theme.js && python3 scripts/check.py"
+    "check": "node --check dist/assets/app.js && node --check dist/assets/theme.js && node --check dist/ds/ds.js && python3 scripts/check.py"
   }
 }
