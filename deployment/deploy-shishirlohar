@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Root-owned server helper invoked by the restricted GitHub Actions account.
+set -euo pipefail
+
+if [ "$#" -ne 1 ] || [[ ! "$1" =~ ^[0-9a-f]{7,40}$ ]]; then
+  echo "usage: deploy-shishirlohar <git-revision>" >&2
+  exit 64
+fi
+
+revision="$1"
+archive="/home/portfolio-deploy/incoming/portfolio.tar"
+releases="/var/www/shishirlohar.com/releases"
+release="$releases/$revision"
+
+exec 9>/run/lock/shishirlohar-deploy.lock
+flock -n 9 || { echo "another deployment is running" >&2; exit 75; }
+
+test -s "$archive"
+install -d -m 755 "$releases"
+
+if [ ! -d "$release" ]; then
+  staging="$releases/.${revision}.staging.$$"
+  install -d -m 755 "$staging"
+  tar --extract --file "$archive" --directory "$staging" \
+    --no-same-owner --no-same-permissions
+  chmod -R a+rX "$staging"
+  restorecon -RF "$staging"
+  mv "$staging" "$release"
+fi
+
+ln -sfn "$release" /var/www/shishirlohar.com/current.next
+mv -Tf /var/www/shishirlohar.com/current.next /var/www/shishirlohar.com/current
+nginx -t
+curl --fail --silent --show-error \
+  --resolve shishirlohar.com:443:127.0.0.1 \
+  https://shishirlohar.com/health
+rm -f "$archive"

@@ -1,0 +1,1 @@
+portfolio-deploy ALL=(root) NOPASSWD: /usr/local/sbin/deploy-shishirlohar *

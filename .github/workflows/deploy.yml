@@ -19,6 +19,7 @@ jobs:
       DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
       DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
       DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -26,38 +27,32 @@ jobs:
       - name: Validate website
         run: npm run check
 
-      - name: Configure deployment key
-        if: env.DEPLOY_SSH_KEY != ''
+      - name: Check deployment configuration
+        run: |
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_SSH_KEY"
+          test -n "$DEPLOY_KNOWN_HOSTS"
+
+      - name: Configure deployment SSH
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Package tracked site
-        if: env.DEPLOY_SSH_KEY != ''
         run: git archive --format=tar HEAD:dist > portfolio.tar
 
       - name: Upload release
-        if: env.DEPLOY_SSH_KEY != ''
-        run: scp -i ~/.ssh/deploy_key portfolio.tar "$DEPLOY_USER@$DEPLOY_HOST:/tmp/shishir-portfolio-release.tar"
+        run: scp -i ~/.ssh/deploy_key portfolio.tar "$DEPLOY_USER@$DEPLOY_HOST:incoming/portfolio.tar"
 
       - name: Activate release
-        if: env.DEPLOY_SSH_KEY != ''
         run: |
           revision="$(git rev-parse --short HEAD)"
-          ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" bash -s -- "$revision" <<'REMOTE'
-          set -euo pipefail
-          release="/var/www/shishirlohar.com/releases/$1"
-          sudo mkdir -p "$release"
-          sudo tar -xf /tmp/shishir-portfolio-release.tar -C "$release"
-          sudo chmod -R a+rX "$release"
-          sudo restorecon -RF /var/www/shishirlohar.com
-          sudo ln -sfn "$release" /var/www/shishirlohar.com/current.next
-          sudo mv -Tf /var/www/shishirlohar.com/current.next /var/www/shishirlohar.com/current
-          curl --fail --silent --show-error --resolve shishirlohar.com:443:127.0.0.1 https://shishirlohar.com/health
-          REMOTE
+          ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" \
+            sudo /usr/local/sbin/deploy-shishirlohar "$revision"
 
       - name: Verify production
-        if: env.DEPLOY_SSH_KEY != ''
         run: curl --fail --silent --show-error --retry 5 --retry-delay 2 https://shishirlohar.com/health

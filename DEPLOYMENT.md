@@ -11,19 +11,20 @@ The portfolio is installed on Casterly Rock (`opc@129.80.109.207`, Oracle Linux 
 - OCI network security group ingress allows public TCP traffic only on ports 80 and 443 for this site. The VM firewall also allows HTTP and HTTPS.
 - Let's Encrypt provides HTTPS for `shishirlohar.com`; Certbot manages renewal. HTTP redirects permanently to HTTPS.
 
-For future content updates, commit and push, then run `bash scripts/deploy-nginx.sh`. It uploads only tracked website files, retains prior releases, and atomically changes the active symlink. It uses your local SSH access and requires no GitHub token on the server.
+For future content updates, commit and push to `main`. GitHub Actions validates the site, deploys it, and verifies production automatically. `bash scripts/deploy-nginx.sh` remains available as a manual fallback using your local SSH access.
 
 ### Automatic deployment from GitHub
 
 `.github/workflows/deploy.yml` validates and deploys the tracked `dist/` directory after every push to `main`. It can also be run manually from the repository's Actions tab. The workflow uses a dedicated deployment SSH key and the following GitHub Actions secrets:
 
 - `DEPLOY_HOST`: `129.80.109.207`
-- `DEPLOY_USER`: `opc`
+- `DEPLOY_USER`: `portfolio-deploy`
 - `DEPLOY_SSH_KEY`: the private half of a dedicated deployment key
+- `DEPLOY_KNOWN_HOSTS`: the server's pinned Ed25519 SSH host key
 
-Do not upload the laptop's personal SSH key. Generate a separate Ed25519 key without a passphrase for this one repository, append its public half to `/home/opc/.ssh/authorized_keys`, and save only its private half as `DEPLOY_SSH_KEY`. The server account already restricts deployment changes through `sudo`; keep the repository private and rotate the key if repository access changes.
+The server uses a dedicated `portfolio-deploy` account and repository-specific Ed25519 key, so the laptop's personal SSH key is never stored in GitHub. That account can upload only into its own home directory and run the root-owned `/usr/local/sbin/deploy-shishirlohar` helper through `sudo`. The helper accepts only a hexadecimal Git revision and deploys only to this site's fixed release path. Rotate the key if repository access changes.
 
-Until these three secrets and the dedicated public key are installed, pushes remain safe: the workflow fails before connecting and the current production release keeps running. Once configured, the deployment flow is:
+The deployment flow is:
 
 `push to main → validate → upload versioned release → atomically switch current symlink → verify HTTPS`
 
