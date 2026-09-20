@@ -8,9 +8,24 @@ The portfolio is installed on Casterly Rock (`opc@129.80.109.207`, Oracle Linux 
 - Releases: `/var/www/shishirlohar.com/releases/`; active symlink: `/var/www/shishirlohar.com/current`.
 - Nginx virtual host: `/etc/nginx/conf.d/shishirlohar.com.conf`. The original default configuration remains intact.
 - Server-local checks passed for the homepage, projects, experience, JavaScript, PDF, and 404 handling.
-- Public HTTP/HTTPS currently time out. The VM firewall allows HTTP and HTTPS; OCI subnet security-list/NSG ingress still needs inspection. HTTPS certificate issuance remains pending public reachability.
+- OCI network security group ingress allows public TCP traffic only on ports 80 and 443 for this site. The VM firewall also allows HTTP and HTTPS.
+- Let's Encrypt provides HTTPS for `shishirlohar.com`; Certbot manages renewal. HTTP redirects permanently to HTTPS.
 
 For future content updates, commit and push, then run `bash scripts/deploy-nginx.sh`. It uploads only tracked website files, retains prior releases, and atomically changes the active symlink. It uses your local SSH access and requires no GitHub token on the server.
+
+### Automatic deployment from GitHub
+
+`.github/workflows/deploy.yml` validates and deploys the tracked `dist/` directory after every push to `main`. It can also be run manually from the repository's Actions tab. The workflow uses a dedicated deployment SSH key and the following GitHub Actions secrets:
+
+- `DEPLOY_HOST`: `129.80.109.207`
+- `DEPLOY_USER`: `opc`
+- `DEPLOY_SSH_KEY`: the private half of a dedicated deployment key
+
+Do not upload the laptop's personal SSH key. Generate a separate Ed25519 key without a passphrase for this one repository, append its public half to `/home/opc/.ssh/authorized_keys`, and save only its private half as `DEPLOY_SSH_KEY`. The server account already restricts deployment changes through `sudo`; keep the repository private and rotate the key if repository access changes.
+
+Until these three secrets and the dedicated public key are installed, pushes remain safe: the workflow fails before connecting and the current production release keeps running. Once configured, the deployment flow is:
+
+`push to main → validate → upload versioned release → atomically switch current symlink → verify HTTPS`
 
 Rollback by pointing `current` at a previous release directory. Nginx reads through that symlink, so content changes do not require a restart.
 
