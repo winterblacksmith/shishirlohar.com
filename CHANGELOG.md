@@ -15,3 +15,12 @@ FastAPI, shared database storage, and daily automation remain future work.
 
 Fixed the portfolio name hover animation to color the actual text, removing
 the offset duplicate-letter overlay.
+
+### Daily market data
+- Added an API refresh for completed SPY daily adjusted prices, with retry, validation,
+  full-history replacement, freshness checks and a dataset hash.
+- Added weekday production refreshes at 23:30 UTC (active after merge to main).
+- Release packages use content-derived IDs so data-only updates deploy correctly.
+- Added visible data-through/retrieval dates, stale-data status and update checking.
+- Added six refresh tests covering unfinished sessions, weekends, bad/missing data,
+  stale data, duplicate dates and preserving the previous file after failure.

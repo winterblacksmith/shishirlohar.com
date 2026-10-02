@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "30 23 * * 1-5"
 
 concurrency:
   group: portfolio-production
@@ -14,6 +16,7 @@ permissions:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
@@ -23,6 +26,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Refresh completed daily market data
+        run: npm run refresh:data
 
       - name: Validate website
         run: npm run check
@@ -46,15 +52,17 @@ jobs:
         run: |
           mkdir release
           git archive --format=tar HEAD:dist | tar -xf - -C release
+          cp dist/assets/quant/spy.json release/assets/quant/spy.json
           python3 scripts/version-assets.py release
           tar -cf portfolio.tar -C release .
+          echo "RELEASE_ID=$(sha256sum portfolio.tar | cut -c1-40)" >> "$GITHUB_ENV"
 
       - name: Upload release
         run: scp -i ~/.ssh/deploy_key portfolio.tar "$DEPLOY_USER@$DEPLOY_HOST:incoming/portfolio.tar"
 
       - name: Activate release
         run: |
-          revision="$(git rev-parse --short HEAD)"
+          revision="$RELEASE_ID"
           ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" \
             sudo /usr/local/sbin/deploy-shishirlohar "$revision"
 

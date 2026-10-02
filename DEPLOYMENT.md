@@ -93,3 +93,15 @@ Keep the old site live until the new origin passes checks. This site's canonical
 - [Dokploy application domains](https://docs.dokploy.com/docs/core/domains)
 - [Dokploy Compose domains](https://docs.dokploy.com/docs/core/docker-compose/domains)
 - [Oracle Always Free resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
+
+## Atlas Quant daily data releases
+
+After the Atlas Quant branch merges to main, the GitHub deployment workflow also
+runs weekdays at 23:30 UTC. It refreshes SPY data, validates it and runs the site
+checks before packaging. Any refresh/check failure leaves production unchanged.
+The release directory ID for this workflow is now the first 40 hexadecimal
+characters of the archive SHA-256, so daily data releases do not reuse a source
+commit's old directory. The existing server helper accepts this format unchanged.
+Check the Actions log for the source commit, dataset hash and refresh date.
+The local deploy script and Docker builds still package their supplied snapshot;
+run and commit `npm run refresh:data` first when deploying through those paths.

@@ -42,3 +42,17 @@ Export JSON includes all input rows, source, engine version, configuration and
 results; export CSV provides daily strategy/benchmark equity, cash and holdings.
 See `ARCHITECTURE.md` for timing and metric formulas, `BACKLOG.md` for scope,
 and `learning/001-backtesting.md` for the first lesson.
+
+### Daily market data
+
+Run `npm run refresh:data` to fetch the latest completed SPY daily history through
+the Yahoo Finance chart endpoint (no API key). Run `npm run check` before publishing.
+The bundled file is now refreshed beyond the original 2020–2025 snapshot.
+
+After merge into `main`, the deployment workflow refreshes and publishes every
+weekday at 23:30 UTC. It also refreshes on ordinary production deployments. Before
+merge, the schedule is not active. A failure leaves the currently published site
+intact; inspect the failed GitHub Actions run. The lab shows data-through and retrieval
+dates, warns when stale, and can check for a newer published snapshot. No live quotes
+or paid provider subscription is configured. Yahoo's chart endpoint is unofficial;
+a supported provider adapter can replace it if reliability requirements increase.

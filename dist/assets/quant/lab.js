@@ -1,4 +1,4 @@
-import {backtest, parseCSV} from './engine.js';
+import {backtest, parseCSV, validateRows} from './engine.js';
 const $ = s => document.querySelector(s), money = n => n.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}), pct = n => `${(n*100).toFixed(2)}%`;
 let bundled, data, current;
 const key = 'atlas-experiments-v1';
@@ -9,8 +9,19 @@ function setData(next) {
   for(const id of ['start','end']) { $(`#${id}`).min=min; $(`#${id}`).max=max; }
   $('#start').value=rows[Math.min(253,Math.max(0,rows.length-3))].date; $('#end').value=max;
   $('#data-note').textContent=`${data.ticker} · ${rows.length.toLocaleString()} observations · ${min} → ${max}. ${data.source}`;
-  $('#run').disabled=false; status('Ready to test.');
+  $('#run').disabled=false;
+  showFreshness(data);
+  status('Ready to test.');
 }
+function showFreshness(source) {
+  const last=source.rows.at(-1).date;
+  const stale=(Date.now()-Date.parse(last+'T23:59:59Z'))/86400000>5;
+  const stamp=new Date(source.retrieved);
+  const retrieved=Number.isNaN(stamp.getTime())?'unknown':stamp.toLocaleString('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+  $('#freshness').textContent=`Data through ${last}${stale?' · Data is over five days old':''}. Retrieved ${retrieved}.`;
+  $('#freshness').classList.toggle('stale',stale);
+}
+
 function el(tag,text,className) {const node=document.createElement(tag);node.textContent=text;if(className)node.className=className;return node;}
 function draw(result) {
   const svg=$('#chart'); svg.querySelectorAll('g').forEach(n=>n.remove());
@@ -49,7 +60,7 @@ $('#backtest-form').addEventListener('submit',event=>{
 });
 $('#strategy').addEventListener('change',()=>{const hold=$('#strategy').value==='hold';$('#lookback').disabled=hold;$('#rule').textContent=hold?'Buy at the first selected close and hold through the final close.':'Own the asset when its prior closing price is above its close N sessions earlier. Otherwise, hold cash.';});
 $('#dataset').addEventListener('change',()=>{
-  const custom=$('#dataset').value==='csv';$('#import-fields').hidden=!custom;
+  const custom=$('#dataset').value==='csv';$('#import-fields').hidden=!custom;$('#check-data').hidden=custom;$('#freshness').textContent='';
   if(!custom && bundled)setData(bundled);else{data=null;current=null;$('#results').hidden=true;$('#empty').hidden=false;$('#run').disabled=true;$('#csv').value='';$('#data-note').textContent='Import a daily price series to begin.';status('Choose a CSV file.');}
 });
 $('#csv').addEventListener('change',async()=>{try{const f=$('#csv').files[0];if(!f)return;if(f.size>2000000)throw new Error('Choose a CSV smaller than 2 MB.');const rows=parseCSV(await f.text());setData({ticker:$('#ticker').value.trim()||'CUSTOM',source:`User CSV: ${f.name}`,retrieved:new Date().toISOString(),priceBasis:'User supplied; adjustment and daily frequency not independently verified.',rows});}catch(e){data=null;$('#run').disabled=true;status(e.message);}});
@@ -59,6 +70,24 @@ $('#export-csv').addEventListener('click',()=>{if(!current)return;const r=curren
 function saved(){const value=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(value))throw new Error('Invalid archive');return value.filter(e=>e?.id&&e?.result?.config&&e?.data?.rows);}
 function archive(){try{const runs=saved();$('#saved').replaceChildren();if(!runs.length)$('#saved').append(el('p','No saved experiments yet. Run a backtest, then save it.','fine'));for(const e of runs){const row=el('div','','saved-row');row.append(el('span',`${e.data.ticker} · ${e.result.config.strategy} · ${e.result.config.start} → ${e.result.config.end}`));const open=el('button','Load run');open.addEventListener('click',()=>{try{render({...e,result:backtest(e.data.rows,e.result.config)});status('Saved run restored. Form settings apply to your next run.');$('#results').scrollIntoView({block:'start'});}catch(error){status(`Could not restore run: ${error.message}`);}});row.append(open);$('#saved').append(row);}}catch{$('#saved').textContent='Browser storage is unavailable or damaged. Use JSON export to retain your experiments.';}}
 $('#save').addEventListener('click',()=>{if(!current)return;try{const runs=saved().filter(e=>e.id!==current.id);localStorage.setItem(key,JSON.stringify([current,...runs].slice(0,10)));archive();status('Experiment saved in this browser.');}catch{status('Could not save to browser storage. Export JSON to keep this experiment.');}});
-try{const response=await fetch('/assets/quant/spy.json');if(!response.ok)throw new Error('Dataset request failed');bundled=await response.json();if($('#dataset').value==='spy')setData(bundled);}catch{status('Bundled data could not load. Reload or import a daily CSV.');}
-
+async function loadPublishedData(initial = false) {
+  const button=$('#check-data');button.disabled=true;
+  try {
+    const response=await fetch('/assets/quant/spy.json',{cache:'no-store'});
+    if(!response.ok)throw new Error('Dataset request failed');
+    const next=await response.json();validateRows(next.rows);
+    if(next.ticker!=='SPY')throw new Error('Unexpected dataset');
+    const changed=JSON.stringify(bundled?.rows)!==JSON.stringify(next.rows);
+    bundled=next;
+    if($('#dataset').value==='spy') {
+      if(initial || changed)setData(bundled);
+      else {data=bundled;showFreshness(bundled);}
+      if(!initial)status(changed?'Updated data loaded. Run a new backtest.':'You have the latest published dataset. New daily prices appear after the scheduled refresh.');
+    }
+  } catch {
+    status(data?'Update check failed. Your loaded data and results are unchanged.':'Daily data could not load. Reload or import a CSV.');
+  } finally {button.disabled=false;}
+}
+$('#check-data').addEventListener('click',()=>loadPublishedData());
+await loadPublishedData(true);
 archive();

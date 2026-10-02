@@ -39,3 +39,33 @@ Each saved run records engine version, config,
 source metadata, all input rows, results and timestamp. Exports survive browser
 storage clearing. Local storage is limited to the latest 10 experiments. There
 is no account, cloud sync, live quote feed, or claim of predictive performance.
+
+## Daily data refresh
+
+`scripts/refresh-market-data.py` calls the Yahoo Finance chart endpoint from the
+build runner. It refreshes the complete adjusted history, rather than appending
+new prices to a history with a different dividend-adjustment basis. The endpoint
+requires no key in this implementation, but is unofficial and has no availability
+contract; HTTP errors, throttling or schema changes fail the refresh visibly.
+
+The deployment workflow runs weekdays at 23:30 UTC and also refreshes on production
+push/manual deployments. GitHub schedules become active only on the default branch;
+the job additionally requires `main`. No production deployment runs on the feature
+branch. Prices dated today are excluded until 18:00 America/New_York, allowing a
+buffer after the regular close. Holidays/weekends add no rows. Validation checks
+symbol, ordering, finite positive prices, full history, previously known dates,
+and a maximum five-calendar-day lag. This is a freshness heuristic, not a complete
+exchange holiday calendar. Failed refreshes abort before publishing.
+
+The runner atomically replaces its local dataset, runs checks, and copies it into
+the release package. It does not commit generated prices or require repository
+write permission. Release IDs are 40 hexadecimal characters from the package hash
+so new data gets its own release even when the source commit is unchanged. This
+uses the existing deployment helper's accepted ID format and keeps rollback releases.
+
+The frontend fetches same-origin JSON with no-store and provides an explicit update
+check. That button checks the published snapshot; it does not contact Yahoo or start
+a deployment. Experiments retain their original input rows and metadata. The data
+includes a SHA-256 of the price rows, retrieval timestamp, and latest session date.
+GitHub Actions run logs report refresh failures. Scheduled workflows can be delayed
+or disabled by GitHub; the UI flags data more than five days old.
