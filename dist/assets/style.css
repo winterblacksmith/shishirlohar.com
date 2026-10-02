@@ -23,6 +23,8 @@ html[data-motion=paused] .diamond:hover::before{transform:rotate(45deg);backgrou
 html[data-motion=paused] .branch-list li:hover::before{transform:none}
 @media(prefers-reduced-motion:reduce){.diamond:hover{transform:none}.diamond:hover::before{transform:rotate(45deg);background:var(--strong)}.branch-list li:hover::before{transform:none}main a:not(.primary-link):not(.project-link){transition:none}}
 
+.badge.green{background:#237345}
+
 /* Centered vector arrow with a small trailing stroke on interaction. */
 .projects-arrow{display:block;width:28px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .primary-link:has(.projects-arrow){gap:6px}
