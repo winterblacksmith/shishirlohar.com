@@ -68,7 +68,6 @@ nameLink.setAttribute('aria-label', nameText);
 nameLink.replaceChildren(...[...nameText].map((letter, index) => {
   const span = document.createElement('span');
   span.textContent = letter;
-  span.dataset.letter = letter;
   span.setAttribute('aria-hidden', 'true');
   span.style.setProperty('--letter', index);
   return span;
