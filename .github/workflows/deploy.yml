@@ -43,7 +43,11 @@ jobs:
           chmod 600 ~/.ssh/known_hosts
 
       - name: Package tracked site
-        run: git archive --format=tar HEAD:dist > portfolio.tar
+        run: |
+          mkdir release
+          git archive --format=tar HEAD:dist | tar -xf - -C release
+          python3 scripts/version-assets.py release
+          tar -cf portfolio.tar -C release .
 
       - name: Upload release
         run: scp -i ~/.ssh/deploy_key portfolio.tar "$DEPLOY_USER@$DEPLOY_HOST:incoming/portfolio.tar"
