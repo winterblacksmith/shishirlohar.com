@@ -10,6 +10,8 @@ Run `npm run check` for JavaScript syntax and local link checks.
 
 ## Edit
 
+Personal project cards should link directly to the project's repository and use the label “Visit the github repo”. Use “Atlanta, Georgia” for the portfolio location on every page.
+
 - `dist/index.html`: intro and about content.
 - `dist/projects/index.html`: projects and search keywords.
 - `dist/experience/index.html`: roles and education.

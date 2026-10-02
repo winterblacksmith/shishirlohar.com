@@ -68,7 +68,27 @@ nameLink.setAttribute('aria-label', nameText);
 nameLink.replaceChildren(...[...nameText].map((letter, index) => {
   const span = document.createElement('span');
   span.textContent = letter;
+  span.dataset.letter = letter;
   span.setAttribute('aria-hidden', 'true');
   span.style.setProperty('--letter', index);
   return span;
 }));
+
+// Match the rounded dotted perimeter to each card at every responsive size.
+const orbitObserver = new ResizeObserver(entries => {
+  for (const { target } of entries) {
+    const rect = target.querySelector('.project-orbit rect');
+    rect.setAttribute('width', Math.max(0, target.clientWidth - 4));
+    rect.setAttribute('height', Math.max(0, target.clientHeight - 4));
+  }
+});
+document.querySelectorAll('.project').forEach(card => {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.classList.add('project-orbit');
+  svg.setAttribute('aria-hidden', 'true');
+  const rect = document.createElementNS(svg.namespaceURI, 'rect');
+  for (const [key, value] of Object.entries({ x: 2, y: 2, rx: 14 })) rect.setAttribute(key, value);
+  svg.append(rect);
+  card.append(svg);
+  orbitObserver.observe(card);
+});
