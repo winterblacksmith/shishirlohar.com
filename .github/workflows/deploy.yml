@@ -16,8 +16,11 @@ permissions:
 
 jobs:
   deploy:
-    if: github.ref == 'refs/heads/main'
+    # Standard runners are free for public repositories. Skip before allocating
+    # a runner if visibility changes, rather than consuming billable private minutes.
+    if: github.ref == 'refs/heads/main' && github.event.repository.private == false
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
       DEPLOY_USER: ${{ secrets.DEPLOY_USER }}

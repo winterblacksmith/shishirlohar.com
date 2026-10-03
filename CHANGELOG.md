@@ -24,3 +24,9 @@ the offset duplicate-letter overlay.
 - Added visible data-through/retrieval dates, stale-data status and update checking.
 - Added six refresh tests covering unfinished sessions, weekends, bad/missing data,
   stale data, duplicate dates and preserving the previous file after failure.
+
+### Free-service constraint
+Verified the repository is public and uses a free standard GitHub Actions runner.
+Added a job-level visibility guard to skip deployments if the repository becomes
+private, plus a ten-minute timeout. Documented that data refreshes have no paid
+fallback and continue to use existing hosting.

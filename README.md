@@ -56,3 +56,16 @@ intact; inspect the failed GitHub Actions run. The lab shows data-through and re
 dates, warns when stale, and can check for a newer published snapshot. No live quotes
 or paid provider subscription is configured. Yahoo's chart endpoint is unofficial;
 a supported provider adapter can replace it if reliability requirements increase.
+
+### Cost constraint
+
+Keep daily data updates free of new service charges. The current Yahoo request is
+unauthenticated and has no billing account, subscription, or paid fallback. If it
+stops working, refresh fails rather than upgrading or purchasing access.
+
+The repository is public and uses the standard `ubuntu-latest` Actions runner.
+GitHub documents standard runners as free for public repositories. The deployment
+job checks visibility before runner allocation and skips if the repository becomes
+private. No Actions artifact storage, paid runner, or new cloud service is added.
+Hosting continues on the existing server; its existing storage, bandwidth, and
+account billing remain separate from these API/runner costs.
