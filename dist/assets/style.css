@@ -42,9 +42,7 @@ nav.has-indicator a[aria-current=page]::after{display:none}
 .nav-indicator.ready{transition:transform .38s cubic-bezier(.22,1,.36,1),width .38s cubic-bezier(.22,1,.36,1)}
 .name:hover,.name:focus-visible{color:var(--strong)}
 .name span{transition:color .4s ease}
-.name span{position:relative}
-.name span::after{content:attr(data-letter);position:absolute;inset:0;opacity:0;animation:name-rainbow 3s linear infinite;animation-delay:calc(var(--letter) * -.09s);transition:opacity .6s ease;pointer-events:none}
-.name:is(:hover,:focus-visible) span::after{opacity:1}
+.name:is(:hover,:focus-visible) span{animation:name-rainbow 3s linear infinite;animation-delay:calc(var(--letter) * -.09s)}
 .signoff{justify-content:flex-end}
 .signoff>.signature:first-child{font-size:39px}
 @keyframes name-rainbow{0%,100%{color:var(--strong)}15%{color:#e879a9}30%{color:#e8a35b}45%{color:#a5c95b}60%{color:#55bdba}75%{color:#799dec}90%{color:#bc8de5}}
@@ -58,5 +56,5 @@ html[data-motion=paused] .name span{animation:none!important}
 .project:is(:hover,:focus-within) .project-orbit{opacity:.8}
 .project:is(:hover,:focus-within) .project-orbit rect{animation-play-state:running}
 @keyframes orbit-dots{to{stroke-dashoffset:-10}}
-html[data-motion=paused] .project-orbit rect,html[data-motion=paused] .name span::after{animation-play-state:paused!important}
-@media(prefers-reduced-motion:reduce){.project-orbit rect,.name span::after{animation:none!important}}
+html[data-motion=paused] .project-orbit rect,html[data-motion=paused] .name span{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.project-orbit rect,.name span{animation:none!important}}
