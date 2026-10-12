@@ -30,3 +30,10 @@ Verified the repository is public and uses a free standard GitHub Actions runner
 Added a job-level visibility guard to skip deployments if the repository becomes
 private, plus a ten-minute timeout. Documented that data refreshes have no paid
 fallback and continue to use existing hosting.
+
+## 2026-10-12 — Guided introduction
+Rebuilt the Atlas Quant landing page as a five-chapter exhibit: backtesting basics,
+strategies, execution timing, metrics and a first-run guide. Includes data/cost
+assumptions, CSV and export instructions, accessible chapter links, and an explicitly
+illustrative chart. Dedicated exhibit styles preserve the lab interface.
+Validation: site checks and 14 tests; browser navigation and mobile overflow checks.
