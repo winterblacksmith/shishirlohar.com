@@ -15,7 +15,7 @@ For future content updates, commit and push to `main`. GitHub Actions validates 
 
 ### Automatic deployment from GitHub
 
-`.github/workflows/deploy.yml` validates and deploys the tracked `dist/` directory after every push to `main`. It can also be run manually from the repository's Actions tab. The workflow uses a dedicated deployment SSH key and the following GitHub Actions secrets:
+`.github/workflows/deploy.yml` validates and deploys tracked portfolio files together with the pinned Atlas release after every push to `main`. It can also be run manually from the repository's Actions tab. The workflow uses a dedicated deployment SSH key and the following GitHub Actions secrets:
 
 - `DEPLOY_HOST`: `129.80.109.207`
 - `DEPLOY_USER`: `portfolio-deploy`
@@ -96,12 +96,19 @@ Keep the old site live until the new origin passes checks. This site's canonical
 
 ## Atlas Quant daily data releases
 
-After the Atlas Quant branch merges to main, the GitHub deployment workflow also
-runs weekdays at 23:30 UTC. It refreshes SPY data, validates it and runs the site
+The GitHub deployment workflow runs weekdays at 23:30 UTC. It refreshes SPY data, validates it and runs the site
 checks before packaging. Any refresh/check failure leaves production unchanged.
 The release directory ID for this workflow is now the first 40 hexadecimal
 characters of the archive SHA-256, so daily data releases do not reuse a source
 commit's old directory. The existing server helper accepts this format unchanged.
 Check the Actions log for the source commit, dataset hash and refresh date.
-The local deploy script and Docker builds still package their supplied snapshot;
-run and commit `npm run refresh:data` first when deploying through those paths.
+Atlas source is maintained in `winterblacksmith/atlas-quant`. The workflow checks
+out the exact SHA in `atlas-quant.lock.json`, refreshes that checkout's data, runs
+its tests, and copies its output into the release. `assets/quant/release.json`
+records that source revision. Atlas's own CI never receives deployment secrets.
+
+The local deploy script uses the same pin and refreshes data in a temporary
+checkout. Docker builds fetch the pin and use its bundled snapshot; production
+freshness is managed by the scheduled GitHub deployment. Docker requires network
+access to fetch the pinned public source. No generated Atlas files need to be
+committed to the portfolio. Run `npm run sync:atlas` for a local preview.

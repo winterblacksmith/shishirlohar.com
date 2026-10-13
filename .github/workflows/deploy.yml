@@ -30,8 +30,35 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Read the tested Atlas release
+        id: atlas
+        run: |
+          python3 - <<'PYCODE' >> "$GITHUB_OUTPUT"
+          import json, re
+          lock = json.load(open('atlas-quant.lock.json'))
+          assert lock['repository'] == 'winterblacksmith/atlas-quant'
+          assert re.fullmatch(r'[0-9a-f]{40}', lock['revision'])
+          print('revision=' + lock['revision'])
+          PYCODE
+
+      - name: Check out the pinned Atlas repository
+        uses: actions/checkout@v4
+        with:
+          repository: winterblacksmith/atlas-quant
+          ref: ${{ steps.atlas.outputs.revision }}
+          path: .atlas-source
+          persist-credentials: false
+
       - name: Refresh completed daily market data
+        working-directory: .atlas-source
         run: npm run refresh:data
+
+      - name: Validate Atlas
+        working-directory: .atlas-source
+        run: npm run check
+
+      - name: Assemble the Atlas preview for link checks
+        run: python3 scripts/assemble-atlas.py
 
       - name: Validate website
         run: npm run check
@@ -55,7 +82,7 @@ jobs:
         run: |
           mkdir release
           git archive --format=tar HEAD:dist | tar -xf - -C release
-          cp dist/assets/quant/spy.json release/assets/quant/spy.json
+          python3 scripts/assemble-atlas.py --output release
           python3 scripts/version-assets.py release
           tar -cf portfolio.tar -C release .
           echo "RELEASE_ID=$(sha256sum portfolio.tar | cut -c1-40)" >> "$GITHUB_ENV"

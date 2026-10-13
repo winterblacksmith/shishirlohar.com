@@ -1,10 +1,10 @@
 # Shishir Lohar — portfolio
 
-A personal, animated portfolio for shishirlohar.com. It is not a React application: it uses semantic HTML, CSS, and vanilla JavaScript, with no package installation or build step required. Nginx serves the production files. The static hosting architecture still supports live animation, search, a command palette, theme switching, and a rotating orbital mark.
+A personal, animated portfolio for shishirlohar.com. It is not a React application: it uses semantic HTML, CSS, and vanilla JavaScript, with no package installation or build step required. Nginx serves the production files. The static hosting architecture still supports live animation, search, a command palette, theme switching, and a three-stage animated workshop.
 
 ## Preview and checks
 
-Run `npm run dev`, then open http://127.0.0.1:4173. Requires Python 3; npm is only a command shortcut. Alternatively run `python3 -m http.server 4173 --bind 127.0.0.1 --directory dist`.
+Run `npm run sync:atlas` once to fetch the pinned Atlas release, then `npm run dev`, then open http://127.0.0.1:4173. Requires Python 3; npm is only a command shortcut. Alternatively run `python3 -m http.server 4173 --bind 127.0.0.1 --directory dist`.
 
 Run `npm run check` for JavaScript syntax and local link checks.
 
@@ -27,45 +27,27 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for Docker, Dokploy, Oracle Cloud, and domain
 
 ## Atlas Quant
 
-Open `/quant/` for the overview or `/quant/lab/` for the research workspace.
-Uses the existing static hosting stack without added packages or server services.
-Run `npm run check` to check the entire site and the quantitative engine tests
-(Node 18+); `npm test` runs just the numerical tests.
+Atlas now lives in [its own repository](https://github.com/winterblacksmith/atlas-quant).
+The portfolio includes the exact revision in `atlas-quant.lock.json`, preserving
+`/quant/` and `/quant/lab/`. The lab's source, tests, methodology, refresh script,
+and backlog belong there. Local generated Atlas files are ignored here.
 
-The bundled Yahoo Finance snapshot contains 1,508 daily SPY adjusted closes from
-2020-01-02 through 2025-12-31, retrieved 2026-10-02. It is historical, not live.
-Import CSV with `date,close` headers, ISO dates, ascending unique observations,
-and positive daily prices. Use one consistent price-adjustment basis.
+```sh
+npm run sync:atlas
+npm run check
+npm run dev
+```
 
-Experiments save in browser localStorage (latest 10), not a shared database.
-Export JSON includes all input rows, source, engine version, configuration and
-results; export CSV provides daily strategy/benchmark equity, cash and holdings.
-See `ARCHITECTURE.md` for timing and metric formulas, `BACKLOG.md` for scope,
-and `learning/001-backtesting.md` for the first lesson.
+The deployment workflow validates both repositories, refreshes completed daily
+SPY prices with Atlas's free unauthenticated Yahoo adapter, and packages the pinned
+code with the new snapshot. Weekday refresh remains at 23:30 UTC on `main`.
+A failed refresh keeps the existing release online. No new paid service is added.
 
-### Daily market data
+See [architecture](ARCHITECTURE.md) for the release process. Daily Codex changes
+are opened as Atlas pull requests; production updates require a reviewed pin bump.
 
-Run `npm run refresh:data` to fetch the latest completed SPY daily history through
-the Yahoo Finance chart endpoint (no API key). Run `npm run check` before publishing.
-The bundled file is now refreshed beyond the original 2020–2025 snapshot.
+## HTML formatting
 
-After merge into `main`, the deployment workflow refreshes and publishes every
-weekday at 23:30 UTC. It also refreshes on ordinary production deployments. Before
-merge, the schedule is not active. A failure leaves the currently published site
-intact; inspect the failed GitHub Actions run. The lab shows data-through and retrieval
-dates, warns when stale, and can check for a newer published snapshot. No live quotes
-or paid provider subscription is configured. Yahoo's chart endpoint is unofficial;
-a supported provider adapter can replace it if reliability requirements increase.
-
-### Cost constraint
-
-Keep daily data updates free of new service charges. The current Yahoo request is
-unauthenticated and has no billing account, subscription, or paid fallback. If it
-stops working, refresh fails rather than upgrading or purchasing access.
-
-The repository is public and uses the standard `ubuntu-latest` Actions runner.
-GitHub documents standard runners as free for public repositories. The deployment
-job checks visibility before runner allocation and skips if the repository becomes
-private. No Actions artifact storage, paid runner, or new cloud service is added.
-Hosting continues on the existing server; its existing storage, bandwidth, and
-account billing remain separate from these API/runner costs.
+HTML uses two-space indentation and a 100-column print width. Run
+`npm run format:html` to format with pinned Prettier 3.6.2 on demand. Runtime and
+checks need no installed packages. Keep `quant lab` in every main navigation.

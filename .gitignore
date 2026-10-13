@@ -3,3 +3,12 @@ node_modules/
 .sites-runtime/
 __pycache__/
 *.pyc
+
+# Atlas source lives in its own repository; these are local/build outputs.
+.atlas-workspace/
+.atlas-source/
+dist/quant/
+dist/assets/quant/
+dist/assets/atlas-shell/
+release/
+portfolio.tar
