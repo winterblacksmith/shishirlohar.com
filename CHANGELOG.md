@@ -37,3 +37,11 @@ strategies, execution timing, metrics and a first-run guide. Includes data/cost
 assumptions, CSV and export instructions, accessible chapter links, and an explicitly
 illustrative chart. Dedicated exhibit styles preserve the lab interface.
 Validation: site checks and 14 tests; browser navigation and mobile overflow checks.
+
+## 2026-10-13 — Independent Atlas and animated workshop
+
+- Replaced the homepage atom with a sequenced assembly, testing, and delivery animation.
+- Added pause, visibility, and reduced-motion handling for the workshop.
+- Moved Atlas source and tests to winterblacksmith/atlas-quant; pin a tested release here.
+- Preserved the lab URLs and the free weekday data refresh on the existing server.
+- Added the quant lab homepage navigation link and formatted HTML throughout.

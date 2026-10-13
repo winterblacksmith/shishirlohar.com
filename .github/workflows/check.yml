@@ -1,0 +1,20 @@
+name: Check portfolio and Atlas integration
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and assemble the pinned Atlas release
+        run: npm run sync:atlas
+      - name: Validate Atlas
+        working-directory: .atlas-source
+        run: npm run check
+      - name: Validate portfolio
+        run: npm run check

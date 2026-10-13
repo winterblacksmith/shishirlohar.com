@@ -11,14 +11,12 @@
     <meta name="theme-color" content="#101011" />
     <link rel="canonical" href="https://shishirlohar.com/" />
     <meta property="og:title" content="Shishir Lohar — Software Engineer" />
-    <meta
-      property="og:description"
-      content="Software, applied AI, and the systems behind them."
-    />
+    <meta property="og:description" content="Software, applied AI, and the systems behind them." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://shishirlohar.com/" />
     <link rel="icon" href="/assets/favicon.svg?v=727f2134fbea" />
-    <link rel="stylesheet" href="/assets/style.css?v=2e4097192789" />
+    <link rel="stylesheet" href="/assets/style.css?v=585e4e4f5c98" />
+    <link rel="stylesheet" href="/assets/workshop.css?v=caac8b2d4363" />
     <script src="/assets/theme.js?v=e03df0f86d0c"></script>
   </head>
   <body data-page="about">
@@ -31,30 +29,18 @@
           <a href="/" data-page="about">about</a
           ><a href="/projects/" data-page="projects">projects</a
           ><a href="/experience/" data-page="experience">experience</a>
+          <a href="/quant/" data-page="quant">quant lab</a>
         </nav>
         <div class="tools">
-          <button
-            id="motion"
-            aria-label="Pause animations"
-            title="Pause animations"
-          >
-            Ⅱ</button
-          ><button
-            id="theme"
-            aria-label="Switch color theme"
-            title="Switch color theme"
-          >
+          <button id="motion" aria-label="Pause animations" title="Pause animations">Ⅱ</button
+          ><button id="theme" aria-label="Switch color theme" title="Switch color theme">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="4" />
               <path
                 d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
               />
             </svg></button
-          ><button
-            id="commands"
-            aria-label="Open command menu"
-            title="Command menu (⌘K or Ctrl K)"
-          >
+          ><button id="commands" aria-label="Open command menu" title="Command menu (⌘K or Ctrl K)">
             <kbd>⌘</kbd><kbd>K</kbd>
           </button>
         </div>
@@ -64,42 +50,99 @@
         <section class="hello" aria-label="Introduction">
           <div class="hello-copy">
             <h2>Hi, I'm Shishir.</h2>
-            <p>
-              I build useful things with software,<br />applied AI, and
-              distributed systems.
-            </p>
+            <p>I build useful things with software,<br />applied AI, and distributed systems.</p>
           </div>
-          <div class="ai-mark" role="img" aria-label="Rotating orbital mark">
-            <svg class="ai-symbol" viewBox="0 0 160 160" aria-hidden="true">
-              <g fill="none" stroke="currentColor" stroke-width="2">
-                <ellipse cx="80" cy="80" rx="64" ry="27" />
-                <ellipse
-                  cx="80"
-                  cy="80"
-                  rx="64"
-                  ry="27"
-                  transform="rotate(60 80 80)"
-                />
-                <ellipse
-                  cx="80"
-                  cy="80"
-                  rx="64"
-                  ry="27"
-                  transform="rotate(120 80 80)"
-                />
+          <figure
+            class="workshop"
+            data-workshop
+            data-phase="build"
+            aria-labelledby="workshop-title"
+          >
+            <figcaption>
+              <span id="workshop-title">A little idea, put to work.</span
+              ><span class="workshop-cycle" aria-hidden="true">Cycle <b data-cycle>01</b></span>
+            </figcaption>
+            <p class="sr-only">
+              An animated workshop: a robot builds a component, a scanner tests it, and a network
+              receives it. Each step waits for the previous output. Use Pause animations in the
+              header to pause.
+            </p>
+            <svg viewBox="0 0 660 180" aria-hidden="true" class="workshop-drawing">
+              <defs>
+                <pattern id="belt-teeth" width="14" height="6" patternUnits="userSpaceOnUse">
+                  <path d="M2 0v6" />
+                </pattern>
+              </defs>
+              <g class="workshop-track">
+                <path d="M38 145h584" />
+                <path d="M174 90h73m-7-4 7 4-7 4M397 90h68m-7-4 7 4-7 4" stroke-dasharray="3 5" />
+                <rect x="30" y="133" width="152" height="12" rx="6" />
+                <rect x="33" y="136" width="146" height="6" fill="url(#belt-teeth)" />
+              </g>
+              <g class="station station-build">
+                <path d="M43 132v-20h33v20M59 111V68" />
+                <circle cx="59" cy="68" r="8" />
+                <g data-arm>
+                  <path d="M65 63l37-29 31 24" />
+                  <circle cx="103" cy="35" r="6" />
+                  <path d="M130 56v17m-8-1v10l8 6 8-6V72" />
+                </g>
+                <path d="M44 123h18" />
+                <circle class="station-light" cx="69" cy="123" r="2" />
+                <g class="build-lines"><path d="M118 112h25m-20-9h15m-10-9h5" /></g>
+              </g>
+              <g class="station station-test">
+                <path d="M266 133V54q0-8 8-8h96q8 0 8 8v79M259 133h25m76 0h25" />
+                <path d="M278 62h87M286 53h13" />
+                <circle class="station-light" cx="358" cy="54" r="2" />
+                <path class="scanner" data-scanner d="M280 77h83" />
+                <g class="test-check">
+                  <circle cx="354" cy="111" r="10" />
+                  <path d="m349 111 4 4 7-8" />
+                </g>
+              </g>
+              <g class="station station-ship">
+                <path d="M493 89h27m35 0h25M537 67V49m0 62v21" />
+                <rect x="522" y="72" width="31" height="33" rx="4" />
+                <rect x="520" y="27" width="35" height="21" rx="3" />
+                <path d="M527 35h12m-12 6h18" />
+                <rect x="580" y="78" width="35" height="24" rx="3" />
+                <path d="M587 86h12m-12 7h18" />
+                <rect x="520" y="132" width="35" height="21" rx="3" />
+                <path d="M527 140h12m-12 6h18" />
+                <circle class="network-pulse" data-pulse cx="537" cy="62" r="3" />
+              </g>
+              <g data-component class="workshop-component" transform="translate(131 120)">
+                <rect x="-10" y="-10" width="20" height="20" rx="3" />
+                <path d="m-4 0 3 3 5-6" />
               </g>
             </svg>
-          </div>
+            <ol class="workshop-stages">
+              <li data-station="build">
+                <span class="workshop-number">01</span><strong>Build</strong
+                ><span data-status>Assembling</span><i></i>
+              </li>
+              <li data-station="test">
+                <span class="workshop-number">02</span><strong>Test</strong
+                ><span data-status>Waiting for part</span><i></i>
+              </li>
+              <li data-station="ship">
+                <span class="workshop-number">03</span><strong>Ship</strong
+                ><span data-status>Waiting for checks</span><i></i>
+              </li>
+            </ol>
+          </figure>
         </section>
         <div class="intro">
           <p class="diamond">
             Engineering
-            <a href="/experience/#ktp"
-              ><span class="badge violet">κ</span>Kappa Theta Pi</a
-            >
+            <a href="/experience/#ktp"><span class="badge violet">κ</span>Kappa Theta Pi</a>
           </p>
           <p class="diamond">
-            SWE <a href="/experience/#warnell"><span class="badge green" aria-hidden="true">P</span>PERSEUS Project</a>
+            SWE
+            <a href="/experience/#warnell"
+              ><span class="badge green" aria-hidden="true">P</span>PERSEUS Project</a
+            >
           </p>
           <p class="diamond">
             CS + AI
@@ -112,32 +155,30 @@
           <h2 class="diamond">what i've been building:</h2>
           <ul class="branch-list">
             <li>
-              building <a href="/projects/#ktpi">KTPI</a>, an agentic AI
-              investigator using the OpenAI API and Model Context Protocol (MCP)
-              tools to analyze workflow logs, commits, and test failures
+              building <a href="/projects/#ktpi">KTPI</a>, an agentic AI investigator using the
+              OpenAI API and Model Context Protocol (MCP) tools to analyze workflow logs, commits,
+              and test failures
             </li>
             <li>
               using local LLMs at UGA Warnell to turn natural language into
-              <a href="/projects/#forestry">SQL and interactive maps</a> across
-              500K+ rows of forestry data
+              <a href="/projects/#forestry">SQL and interactive maps</a> across 500K+ rows of
+              forestry data
             </li>
             <li>
-              founded <a href="https://spotrcars.com">Spotr</a>, an AI vehicle
-              sourcing platform backed by $7,500+ in funding
+              founded <a href="https://spotrcars.com">Spotr</a>, an AI vehicle sourcing platform
+              backed by $7,500+ in funding
             </li>
             <li>
               built a
-              <a href="/projects/#health">machine-learning health model</a> with
-              Python and scikit-learn
+              <a href="/projects/#health">machine-learning health model</a> with Python and
+              scikit-learn
             </li>
           </ul>
         </section>
         <section class="list-section">
           <h2 class="diamond">a little more about me:</h2>
           <ul class="branch-list">
-            <li>
-              software engineering, applied AI, and the systems behind them
-            </li>
+            <li>software engineering, applied AI, and the systems behind them</li>
             <li>
               currently interning at
               <a href="/experience/#warnell">UGA Warnell</a>
@@ -146,29 +187,24 @@
           </ul>
         </section>
         <a class="primary-link" href="/projects/"
-          >see what i've built <svg class="projects-arrow" viewBox="0 0 28 20" aria-hidden="true" focusable="false"><path class="arrow-trail" d="M2 10h5"/><g class="arrow-body"><path d="M6 10h15m-6-6 6 6-6 6"/></g></svg></a
-        >
+          >see what i've built
+          <svg class="projects-arrow" viewBox="0 0 28 20" aria-hidden="true" focusable="false">
+            <path class="arrow-trail" d="M2 10h5" />
+            <g class="arrow-body"><path d="M6 10h15m-6-6 6 6-6 6" /></g></svg
+        ></a>
         <div class="signoff">
-          <span class="signature" aria-label="Shishir"
-            >Shishir<span>.</span></span
-          >
+          <span class="signature" aria-label="Shishir">Shishir<span>.</span></span>
         </div>
       </main>
       <footer>
         <div class="footer-top">
           <div class="socials">
-            <a href="https://github.com/winterblacksmith" aria-label="GitHub"
-              >github ↗</a
-            ><a
-              href="https://www.linkedin.com/in/shishirlohar/"
-              aria-label="LinkedIn"
+            <a href="https://github.com/winterblacksmith" aria-label="GitHub">github ↗</a
+            ><a href="https://www.linkedin.com/in/shishirlohar/" aria-label="LinkedIn"
               >linkedin ↗</a
             ><a href="mailto:shishirlohar@gmail.com">email ↗</a>
           </div>
-          <a
-            href="/assets/shishir-lohar-resume.pdf?v=850dfe616178"
-            target="_blank"
-            rel="noopener"
+          <a href="/assets/shishir-lohar-resume.pdf?v=850dfe616178" target="_blank" rel="noopener"
             >résumé ↗</a
           >
         </div>
@@ -192,13 +228,9 @@
         <a href="/">About <span>01</span></a
         ><a href="/projects/">Projects <span>02</span></a
         ><a href="/experience/">Experience <span>03</span></a
-        ><a
-          href="/assets/shishir-lohar-resume.pdf?v=850dfe616178"
-          target="_blank"
-          rel="noopener"
+        ><a href="/assets/shishir-lohar-resume.pdf?v=850dfe616178" target="_blank" rel="noopener"
           >Open résumé <span>↗</span></a
-        ><a href="mailto:shishirlohar@gmail.com"
-          >Send an email <span>↗</span></a
+        ><a href="mailto:shishirlohar@gmail.com">Send an email <span>↗</span></a
         ><a href="https://github.com/winterblacksmith">GitHub <span>↗</span></a
         ><button id="command-theme">Switch color theme <span>◐</span></button>
       </div>
@@ -206,5 +238,6 @@
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/app.js?v=d10815200a08" defer></script>
+    <script type="module" src="/assets/workshop.js?v=281f6adcfe71"></script>
   </body>
 </html>

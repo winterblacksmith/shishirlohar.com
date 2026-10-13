@@ -3,3 +3,7 @@
 !dist/**
 !nginx.conf
 !Dockerfile
+
+!scripts/
+!scripts/**
+!atlas-quant.lock.json

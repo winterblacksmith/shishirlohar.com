@@ -1,17 +1,26 @@
 #!/usr/bin/env bash
-# Deploy the tracked dist/ files to the existing Casterly Rock Nginx site.
+# Deploy tracked portfolio files plus the pinned Atlas release to the existing Casterly Rock Nginx site.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 server="${1:-opc@129.80.109.207}"
-revision="$(git rev-parse --short HEAD)"
 if [ -n "$(git status --porcelain -- dist)" ]; then
   echo 'Commit changes in dist/ before deploying.' >&2
   exit 1
 fi
-npm run check
-archive="$(mktemp /tmp/shishir-portfolio.XXXXXX)"
-trap 'rm -f "$archive"' EXIT
-git archive --format=tar "HEAD:dist" > "$archive"
+staging="$(mktemp -d /tmp/shishir-portfolio.XXXXXX)"
+trap 'rm -rf "$staging"' EXIT
+mkdir "$staging/site"
+git archive --format=tar HEAD:dist | tar -xf - -C "$staging/site"
+python3 scripts/assemble-atlas.py "$staging/atlas" --fetch --output "$staging/site"
+npm --prefix "$staging/atlas" run refresh:data
+npm --prefix "$staging/atlas" run check
+python3 scripts/assemble-atlas.py "$staging/atlas" --output "$staging/site"
+python3 scripts/version-assets.py "$staging/site"
+python3 scripts/check.py "$staging/site"
+npm test
+archive="$staging/portfolio.tar"
+tar -cf "$archive" -C "$staging/site" .
+revision="$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1], "rb").read()).hexdigest()[:40])' "$archive")"
 scp "$archive" "$server:/tmp/shishir-portfolio-release.tar"
 ssh "$server" bash -s -- "$revision" <<'REMOTE'
 set -euo pipefail

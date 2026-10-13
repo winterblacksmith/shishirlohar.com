@@ -1,7 +1,8 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
-root = Path('dist')
+import sys
+root = Path(sys.argv[1] if len(sys.argv) > 1 else 'dist')
 class Links(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
