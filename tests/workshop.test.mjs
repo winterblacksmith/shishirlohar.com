@@ -12,10 +12,17 @@ test('shipping waits for checks and the second handoff',()=>{
   assert.equal(phases[advanceWorkshop(initial,5799).phase].name,'to-ship');
   assert.equal(phases[advanceWorkshop(initial,5800).phase].name,'ship');
 });
-test('the completed product remains visible before another cycle begins',()=>{
-  const complete=advanceWorkshop(initial,7800);
-  assert.equal(phases[complete.phase].name,'complete');
-  assert.deepEqual(advanceWorkshop(complete,1600),{phase:0,time:0,cycle:2});
+test('delivery flows into feedback and straight into the next build',()=>{
+  const feedback=advanceWorkshop(initial,7800);
+  assert.equal(phases[feedback.phase].name,'feedback');
+  assert.equal(phases[advanceWorkshop(feedback,1399).phase].name,'feedback');
+  assert.deepEqual(advanceWorkshop(feedback,1400),{phase:0,time:0,cycle:2});
   assert.deepEqual(advanceWorkshop(initial,0),initial);
-  assert.deepEqual(advanceWorkshop(initial,18825),{phase:0,time:25,cycle:3});
+  assert.deepEqual(advanceWorkshop(initial,18425),{phase:0,time:25,cycle:3});
+});
+test('many cycles continue without a terminal or idle phase',()=>{
+  let state=initial;
+  for(let i=0;i<1000;i++) state=advanceWorkshop(state,92);
+  assert.deepEqual(state,{phase:0,time:0,cycle:11});
+  assert.equal(phases.some(p=>p.name==='complete'||p.name==='idle'),false);
 });

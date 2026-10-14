@@ -4,7 +4,8 @@ A dependency-free static website served by the existing Nginx deployment.
 HTML lives in `dist/`; shared styles and browser behavior live in `dist/assets/`.
 The homepage workshop uses one state machine, so each station waits for the previous
 output. It pauses with the header motion control, reduced-motion preference,
-hidden tabs, and when the workshop is off screen.
+and hidden tabs. Delivery sends feedback along a return path to start the next
+cycle, with no idle hold between cycles.
 
 ## Atlas integration
 
@@ -27,3 +28,6 @@ Review and merge the Atlas PR, then change the full SHA in the lock file on a ne
 portfolio branch. Run `npm run sync:atlas` and `npm run check`; review and merge the
 portfolio PR. Updating Atlas main alone does not alter the deployed website.
 The public-repository runner guard and free data-source constraint remain in place.
+
+Nginx sends `Cache-Control: no-cache` so browsers revalidate navigation and assets
+after releases. The same setting is maintained in the Docker and live-site configs.

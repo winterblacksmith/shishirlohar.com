@@ -45,3 +45,9 @@ Validation: site checks and 14 tests; browser navigation and mobile overflow che
 - Moved Atlas source and tests to winterblacksmith/atlas-quant; pin a tested release here.
 - Preserved the lab URLs and the free weekday data refresh on the existing server.
 - Added the quant lab homepage navigation link and formatted HTML throughout.
+
+## 2026-10-13 — Continuous feedback loop
+
+- Delivery now returns feedback to assembly, with no idle hold between cycles.
+- Removed offscreen auto-pausing; explicit pause and reduced motion remain supported.
+- Revalidate pages after releases to prevent stale Projects/Experience navigation.
