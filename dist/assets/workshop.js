@@ -1,4 +1,4 @@
-import { advanceWorkshop, phases } from './workshop-state.js';
+import { advanceWorkshop, phases } from './workshop-state.js?v=52a0d0132521';
 const workshop = document.querySelector('[data-workshop]');
 if (workshop) {
   const stations = [...workshop.querySelectorAll('[data-station]')];
@@ -6,9 +6,11 @@ if (workshop) {
   const arm = workshop.querySelector('[data-arm]');
   const scanner = workshop.querySelector('[data-scanner]');
   const pulse = workshop.querySelector('[data-pulse]');
+  const feedback = workshop.querySelector('[data-feedback-path]');
+  const feedbackLength = feedback.getTotalLength();
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let state = { phase: 0, time: 0, cycle: 1 };
-  let previous = null, frame = null, visible = true;
+  let previous = null, frame = null;
   const ease = value => value * value * (3 - 2 * value);
   function render() {
     const { phase, time, cycle } = state;
@@ -16,9 +18,9 @@ if (workshop) {
     workshop.dataset.phase = phases[phase].name;
     workshop.querySelector('[data-cycle]').textContent = String(cycle).padStart(2, '0');
     const labels = [
-      phase === 0 ? 'Assembling' : 'Part ready',
+      phase === 0 ? 'Assembling' : phase === 5 ? 'Receiving feedback' : 'Part ready',
       phase < 2 ? 'Waiting for part' : phase === 2 ? 'Checking' : 'Checks passed',
-      phase < 4 ? 'Waiting for checks' : phase === 4 ? 'Delivering' : 'Delivered',
+      phase < 4 ? 'Waiting for checks' : phase === 4 ? 'Delivering' : 'Sending feedback',
     ];
     stations.forEach((station, index) => {
       const active = index * 2;
@@ -31,14 +33,18 @@ if (workshop) {
     else if (phase >= 2) x = 322;
     if (phase === 3) { x += 215 * ease(progress); y -= 31 * ease(progress); }
     else if (phase >= 4) { x = 537; y = 89; }
+    if (phase === 5) {
+      const point = feedback.getPointAtLength(progress * feedbackLength);
+      x = point.x; y = point.y;
+    }
     component.setAttribute('transform', `translate(${x} ${y})`);
-    component.style.opacity = phase === 0 ? Math.min(1, progress * 3) : 1;
+    component.style.opacity = 1;
     arm.setAttribute('transform', `rotate(${phase === 0 ? Math.sin(progress * Math.PI * 4) * 9 : 0} 59 68)`);
     scanner.setAttribute('transform', `translate(0 ${phase === 2 ? Math.sin(progress * Math.PI * 4) * 24 + 24 : 0})`);
     pulse.setAttribute('cy', 62 - (phase === 4 ? (progress * 3 % 1) * 13 : 0));
   }
   function running() {
-    return visible && !document.hidden && !reduced.matches && document.documentElement.dataset.motion !== 'paused';
+    return !document.hidden && !reduced.matches && document.documentElement.dataset.motion !== 'paused';
   }
   function tick(now) {
     frame = null;
@@ -54,7 +60,6 @@ if (workshop) {
     if (reduced.matches) { state = { phase: 5, time: 0, cycle: 1 }; render(); }
   }
   new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
-  new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(workshop);
   document.addEventListener('visibilitychange', sync);
   reduced.addEventListener('change', sync);
   render(); sync();

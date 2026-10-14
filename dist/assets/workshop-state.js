@@ -5,7 +5,7 @@ export const phases = [
   { name: 'test', duration: 2000 },
   { name: 'to-ship', duration: 700 },
   { name: 'ship', duration: 2000 },
-  { name: 'complete', duration: 1600 },
+  { name: 'feedback', duration: 1400 },
 ];
 export function advanceWorkshop(state, elapsed) {
   let { phase, time, cycle } = state;

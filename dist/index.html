@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://shishirlohar.com/" />
     <link rel="icon" href="/assets/favicon.svg?v=727f2134fbea" />
     <link rel="stylesheet" href="/assets/style.css?v=bcf118c507bb" />
-    <link rel="stylesheet" href="/assets/workshop.css?v=caac8b2d4363" />
+    <link rel="stylesheet" href="/assets/workshop.css?v=7b027e5da866" />
     <script src="/assets/theme.js?v=e03df0f86d0c"></script>
   </head>
   <body data-page="about">
@@ -64,10 +64,10 @@
             </figcaption>
             <p class="sr-only">
               An animated workshop: a robot builds a component, a scanner tests it, and a network
-              receives it. Each step waits for the previous output. Use Pause animations in the
-              header to pause.
+              receives it. Each step waits for the previous output, then delivery sends feedback
+              back to assembly to begin the next cycle. Use Pause animations in the header to pause.
             </p>
-            <svg viewBox="0 0 660 180" aria-hidden="true" class="workshop-drawing">
+            <svg viewBox="0 0 660 218" aria-hidden="true" class="workshop-drawing">
               <defs>
                 <pattern id="belt-teeth" width="14" height="6" patternUnits="userSpaceOnUse">
                   <path d="M2 0v6" />
@@ -111,6 +111,14 @@
                 <rect x="520" y="132" width="35" height="21" rx="3" />
                 <path d="M527 140h12m-12 6h18" />
                 <circle class="network-pulse" data-pulse cx="537" cy="62" r="3" />
+              </g>
+              <g class="workshop-feedback">
+                <path
+                  data-feedback-path
+                  d="M537 89H620Q642 89 642 111V172Q642 194 620 194H153Q131 194 131 172V120"
+                />
+                <path d="m137 154-6-7-6 7" />
+                <text x="382" y="183" text-anchor="middle">FEEDBACK / NEXT ITERATION</text>
               </g>
               <g data-component class="workshop-component" transform="translate(131 120)">
                 <rect x="-10" y="-10" width="20" height="20" rx="3" />
@@ -238,6 +246,6 @@
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/app.js?v=d10815200a08" defer></script>
-    <script type="module" src="/assets/workshop.js?v=281f6adcfe71"></script>
+    <script type="module" src="/assets/workshop.js?v=9bfdbd85fb14"></script>
   </body>
 </html>
