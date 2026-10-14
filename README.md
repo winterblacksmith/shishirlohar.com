@@ -4,7 +4,7 @@ A personal, animated portfolio for shishirlohar.com. It is not a React applicati
 
 ## Preview and checks
 
-Run `npm run sync:atlas` once to fetch the pinned Atlas release, then `npm run dev`, then open http://127.0.0.1:4173. Requires Python 3; npm is only a command shortcut. Alternatively run `python3 -m http.server 4173 --bind 127.0.0.1 --directory dist`.
+Run `npm run sync:atlas` once to fetch the pinned Orion Quant Lab release, then `npm run dev`, then open http://127.0.0.1:4173. Requires Python 3; npm is only a command shortcut. Alternatively run `python3 -m http.server 4173 --bind 127.0.0.1 --directory dist`.
 
 Run `npm run check` for JavaScript syntax and local link checks.
 
@@ -25,12 +25,12 @@ The visual starting points were [Martin Sit's portfolio](https://martinsit.ca/) 
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for Docker, Dokploy, Oracle Cloud, and domain setup. The source is pushed to GitHub and installed on Casterly Rock (my oracle cloud server) using Nginx. See the deployment guide for current public-access and HTTPS status.
 
-## Atlas Quant
+## Orion Quant Lab
 
-Atlas now lives in [its own repository](https://github.com/winterblacksmith/atlas-quant).
+Orion Quant Lab lives in [its own repository](https://github.com/winterblacksmith/atlas-quant).
 The portfolio includes the exact revision in `atlas-quant.lock.json`, preserving
 `/quant/` and `/quant/lab/`. The lab's source, tests, methodology, refresh script,
-and backlog belong there. Local generated Atlas files are ignored here.
+and backlog belong there. Local generated Orion Quant Lab files are ignored here.
 
 ```sh
 npm run sync:atlas
@@ -39,12 +39,12 @@ npm run dev
 ```
 
 The deployment workflow validates both repositories, refreshes completed daily
-SPY prices with Atlas's free unauthenticated Yahoo adapter, and packages the pinned
+SPY prices with Orion Quant Lab's free unauthenticated Yahoo adapter, and packages the pinned
 code with the new snapshot. Weekday refresh remains at 23:30 UTC on `main`.
 A failed refresh keeps the existing release online. No new paid service is added.
 
 See [architecture](ARCHITECTURE.md) for the release process. Daily Codex changes
-are opened as Atlas pull requests; production updates require a reviewed pin bump.
+are opened as Orion Quant Lab pull requests; production updates require a reviewed pin bump.
 
 ## HTML formatting
 

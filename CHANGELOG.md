@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-14
+
+- Renamed the public Atlas Quant project to Orion Quant Lab across the portfolio and lab.
+
 ## 2026-10-02
 Added Atlas Quant Research Lab as a static module within the portfolio.
 Includes a sourced SPY historical snapshot, daily CSV import, reusable backtesting

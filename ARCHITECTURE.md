@@ -7,9 +7,10 @@ output. It pauses with the header motion control, reduced-motion preference,
 and hidden tabs. Delivery sends feedback along a return path to start the next
 cycle, with no idle hold between cycles.
 
-## Atlas integration
+## Orion Quant Lab integration
 
-Atlas is maintained in https://github.com/winterblacksmith/atlas-quant.
+Orion Quant Lab is maintained in https://github.com/winterblacksmith/atlas-quant.
+The repository slug and integration filenames retain their Atlas-era names for compatibility.
 Its architecture, methodology, tests, and learning notes live in that repository.
 The portfolio locks one tested revision in `atlas-quant.lock.json`.
 `npm run sync:atlas` downloads that revision and copies its three public directories
@@ -20,13 +21,13 @@ CI checks out the locked revision, refreshes and validates its daily data, runs 
 tests, then assembles it with the portfolio. Production preserves `/quant/` and
 `/quant/lab/`. The weekday schedule at 23:30 UTC and existing deployment secrets stay
 in the portfolio. Failed validation or refresh prevents publication. Each package
-includes `assets/quant/release.json` to identify the Atlas revision.
+includes `assets/quant/release.json` to identify the Orion revision.
 
-## Releasing Atlas changes
+## Releasing Orion Quant Lab changes
 
-Review and merge the Atlas PR, then change the full SHA in the lock file on a new
+Review and merge the Orion PR, then change the full SHA in the lock file on a new
 portfolio branch. Run `npm run sync:atlas` and `npm run check`; review and merge the
-portfolio PR. Updating Atlas main alone does not alter the deployed website.
+portfolio PR. Updating the Orion main branch alone does not alter the deployed website.
 The public-repository runner guard and free data-source constraint remain in place.
 
 Nginx sends `Cache-Control: no-cache` so browsers revalidate navigation and assets
