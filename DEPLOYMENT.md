@@ -15,7 +15,7 @@ For future content updates, commit and push to `main`. GitHub Actions validates 
 
 ### Automatic deployment from GitHub
 
-`.github/workflows/deploy.yml` validates and deploys tracked portfolio files together with the pinned Atlas release after every push to `main`. It can also be run manually from the repository's Actions tab. The workflow uses a dedicated deployment SSH key and the following GitHub Actions secrets:
+`.github/workflows/deploy.yml` validates and deploys tracked portfolio files together with the pinned Orion Quant Lab release after every push to `main`. It can also be run manually from the repository's Actions tab. The workflow uses a dedicated deployment SSH key and the following GitHub Actions secrets:
 
 - `DEPLOY_HOST`: `129.80.109.207`
 - `DEPLOY_USER`: `portfolio-deploy`
@@ -94,7 +94,7 @@ Keep the old site live until the new origin passes checks. This site's canonical
 - [Dokploy Compose domains](https://docs.dokploy.com/docs/core/docker-compose/domains)
 - [Oracle Always Free resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
 
-## Atlas Quant daily data releases
+## Orion Quant Lab daily data releases
 
 The GitHub deployment workflow runs weekdays at 23:30 UTC. It refreshes SPY data, validates it and runs the site
 checks before packaging. Any refresh/check failure leaves production unchanged.
@@ -102,13 +102,13 @@ The release directory ID for this workflow is now the first 40 hexadecimal
 characters of the archive SHA-256, so daily data releases do not reuse a source
 commit's old directory. The existing server helper accepts this format unchanged.
 Check the Actions log for the source commit, dataset hash and refresh date.
-Atlas source is maintained in `winterblacksmith/atlas-quant`. The workflow checks
+Orion Quant Lab source is maintained in `winterblacksmith/quant-lab`. The workflow checks
 out the exact SHA in `atlas-quant.lock.json`, refreshes that checkout's data, runs
 its tests, and copies its output into the release. `assets/quant/release.json`
-records that source revision. Atlas's own CI never receives deployment secrets.
+records that source revision. Orion Quant Lab's own CI never receives deployment secrets.
 
 The local deploy script uses the same pin and refreshes data in a temporary
 checkout. Docker builds fetch the pin and use its bundled snapshot; production
 freshness is managed by the scheduled GitHub deployment. Docker requires network
-access to fetch the pinned public source. No generated Atlas files need to be
+access to fetch the pinned public source. No generated Orion Quant Lab files need to be
 committed to the portfolio. Run `npm run sync:atlas` for a local preview.
