@@ -2,10 +2,7 @@
 
 A dependency-free static website served by the existing Nginx deployment.
 HTML lives in `dist/`; shared styles and browser behavior live in `dist/assets/`.
-The homepage workshop uses one state machine, so each station waits for the previous
-output. It pauses with the header motion control, reduced-motion preference,
-and hidden tabs. Delivery sends feedback along a return path to start the next
-cycle, with no idle hold between cycles.
+The homepage introduction is text-only; it loads no workshop animation assets.
 
 ## Orion Quant Lab integration
 

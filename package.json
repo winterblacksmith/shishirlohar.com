@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
     "sync:atlas": "python3 scripts/assemble-atlas.py --fetch",
-    "check": "node --check dist/assets/app.js && node --check dist/assets/theme.js && node --check dist/assets/workshop.js && python3 scripts/check.py && npm test",
-    "test": "node --test tests/*.test.mjs",
+    "check": "node --check dist/assets/app.js && node --check dist/assets/theme.js && python3 scripts/check.py",
     "format:html": "npx --yes prettier@3.6.2 --write \"dist/**/*.html\""
   },
   "type": "module"
