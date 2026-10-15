@@ -1,4 +1,4 @@
-name: Check portfolio and Atlas integration
+name: Check portfolio and Orion Quant Lab integration
 on:
   pull_request:
   workflow_dispatch:
@@ -14,9 +14,9 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch and assemble the pinned Atlas release
+      - name: Fetch and assemble the pinned Orion Quant Lab release
         run: npm run sync:atlas
-      - name: Validate Atlas
+      - name: Validate Orion Quant Lab
         working-directory: .atlas-source
         run: npm run check
       - name: Validate portfolio

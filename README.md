@@ -27,7 +27,7 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for Docker, Dokploy, Oracle Cloud, and domain
 
 ## Orion Quant Lab
 
-Orion Quant Lab lives in [its own repository](https://github.com/winterblacksmith/atlas-quant).
+Orion Quant Lab lives in [its own repository](https://github.com/winterblacksmith/quant-lab).
 The portfolio includes the exact revision in `atlas-quant.lock.json`, preserving
 `/quant/` and `/quant/lab/`. The lab's source, tests, methodology, refresh script,
 and backlog belong there. Local generated Orion Quant Lab files are ignored here.

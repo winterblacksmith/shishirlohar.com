@@ -1,11 +1,18 @@
 # Changelog
 
+## 2026-10-15
+
+- Pinned the reviewed Orion Quant Lab release with the moving-average backtest and
+  European options pricer. Updated portfolio links and deployment checkout to the
+  current `winterblacksmith/quant-lab` repository.
+- Updated public and workflow labels to Orion Quant Lab.
+
 ## 2026-10-14
 
-- Renamed the public Atlas Quant project to Orion Quant Lab across the portfolio and lab.
+- Established Orion Quant Lab as the public project name across the portfolio and lab.
 
 ## 2026-10-02
-Added Atlas Quant Research Lab as a static module within the portfolio.
+Added the research lab as a static module within the portfolio.
 Includes a sourced SPY historical snapshot, daily CSV import, reusable backtesting
 engine, configurable momentum and buy-and-hold strategies, proportional transaction
 costs, equity chart, risk metrics, trade history, and local experiment storage.
@@ -36,17 +43,17 @@ private, plus a ten-minute timeout. Documented that data refreshes have no paid
 fallback and continue to use existing hosting.
 
 ## 2026-10-12 — Guided introduction
-Rebuilt the Atlas Quant landing page as a five-chapter exhibit: backtesting basics,
+Rebuilt the Quant Lab landing page as a five-chapter exhibit: backtesting basics,
 strategies, execution timing, metrics and a first-run guide. Includes data/cost
 assumptions, CSV and export instructions, accessible chapter links, and an explicitly
 illustrative chart. Dedicated exhibit styles preserve the lab interface.
 Validation: site checks and 14 tests; browser navigation and mobile overflow checks.
 
-## 2026-10-13 — Independent Atlas and animated workshop
+## 2026-10-13 — Independent lab and animated workshop
 
 - Replaced the homepage atom with a sequenced assembly, testing, and delivery animation.
 - Added pause, visibility, and reduced-motion handling for the workshop.
-- Moved Atlas source and tests to winterblacksmith/atlas-quant; pin a tested release here.
+- Moved lab source and tests to winterblacksmith/quant-lab; pin a tested release here.
 - Preserved the lab URLs and the free weekday data refresh on the existing server.
 - Added the quant lab homepage navigation link and formatted HTML throughout.
 

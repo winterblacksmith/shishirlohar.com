@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deploy tracked portfolio files plus the pinned Atlas release to the existing Casterly Rock Nginx site.
+# Deploy tracked portfolio files plus the pinned Orion Quant Lab release to the existing Casterly Rock Nginx site.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 server="${1:-opc@129.80.109.207}"

@@ -102,7 +102,7 @@ The release directory ID for this workflow is now the first 40 hexadecimal
 characters of the archive SHA-256, so daily data releases do not reuse a source
 commit's old directory. The existing server helper accepts this format unchanged.
 Check the Actions log for the source commit, dataset hash and refresh date.
-Orion Quant Lab source is maintained in `winterblacksmith/atlas-quant`. The workflow checks
+Orion Quant Lab source is maintained in `winterblacksmith/quant-lab`. The workflow checks
 out the exact SHA in `atlas-quant.lock.json`, refreshes that checkout's data, runs
 its tests, and copies its output into the release. `assets/quant/release.json`
 records that source revision. Orion Quant Lab's own CI never receives deployment secrets.

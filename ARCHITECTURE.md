@@ -9,8 +9,8 @@ cycle, with no idle hold between cycles.
 
 ## Orion Quant Lab integration
 
-Orion Quant Lab is maintained in https://github.com/winterblacksmith/atlas-quant.
-The repository slug and integration filenames retain their Atlas-era names for compatibility.
+Orion Quant Lab is maintained in https://github.com/winterblacksmith/quant-lab.
+The existing integration filenames and asset paths remain stable for deployed releases.
 Its architecture, methodology, tests, and learning notes live in that repository.
 The portfolio locks one tested revision in `atlas-quant.lock.json`.
 `npm run sync:atlas` downloads that revision and copies its three public directories
