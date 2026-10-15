@@ -15,8 +15,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://shishirlohar.com/" />
     <link rel="icon" href="/assets/favicon.svg?v=727f2134fbea" />
-    <link rel="stylesheet" href="/assets/style.css?v=bcf118c507bb" />
-    <link rel="stylesheet" href="/assets/workshop.css?v=7b027e5da866" />
+    <link rel="stylesheet" href="/assets/style.css?v=b51eec1da5b0" />
     <script src="/assets/theme.js?v=e03df0f86d0c"></script>
   </head>
   <body data-page="about">
@@ -52,94 +51,6 @@
             <h2>Hi, I'm Shishir.</h2>
             <p>I build useful things with software,<br />applied AI, and distributed systems.</p>
           </div>
-          <figure
-            class="workshop"
-            data-workshop
-            data-phase="build"
-            aria-labelledby="workshop-title"
-          >
-            <figcaption>
-              <span id="workshop-title">A little idea, put to work.</span
-              ><span class="workshop-cycle" aria-hidden="true">Cycle <b data-cycle>01</b></span>
-            </figcaption>
-            <p class="sr-only">
-              An animated workshop: a robot builds a component, a scanner tests it, and a network
-              receives it. Each step waits for the previous output, then delivery sends feedback
-              back to assembly to begin the next cycle. Use Pause animations in the header to pause.
-            </p>
-            <svg viewBox="0 0 660 218" aria-hidden="true" class="workshop-drawing">
-              <defs>
-                <pattern id="belt-teeth" width="14" height="6" patternUnits="userSpaceOnUse">
-                  <path d="M2 0v6" />
-                </pattern>
-              </defs>
-              <g class="workshop-track">
-                <path d="M38 145h584" />
-                <path d="M174 90h73m-7-4 7 4-7 4M397 90h68m-7-4 7 4-7 4" stroke-dasharray="3 5" />
-                <rect x="30" y="133" width="152" height="12" rx="6" />
-                <rect x="33" y="136" width="146" height="6" fill="url(#belt-teeth)" />
-              </g>
-              <g class="station station-build">
-                <path d="M43 132v-20h33v20M59 111V68" />
-                <circle cx="59" cy="68" r="8" />
-                <g data-arm>
-                  <path d="M65 63l37-29 31 24" />
-                  <circle cx="103" cy="35" r="6" />
-                  <path d="M130 56v17m-8-1v10l8 6 8-6V72" />
-                </g>
-                <path d="M44 123h18" />
-                <circle class="station-light" cx="69" cy="123" r="2" />
-                <g class="build-lines"><path d="M118 112h25m-20-9h15m-10-9h5" /></g>
-              </g>
-              <g class="station station-test">
-                <path d="M266 133V54q0-8 8-8h96q8 0 8 8v79M259 133h25m76 0h25" />
-                <path d="M278 62h87M286 53h13" />
-                <circle class="station-light" cx="358" cy="54" r="2" />
-                <path class="scanner" data-scanner d="M280 77h83" />
-                <g class="test-check">
-                  <circle cx="354" cy="111" r="10" />
-                  <path d="m349 111 4 4 7-8" />
-                </g>
-              </g>
-              <g class="station station-ship">
-                <path d="M493 89h27m35 0h25M537 67V49m0 62v21" />
-                <rect x="522" y="72" width="31" height="33" rx="4" />
-                <rect x="520" y="27" width="35" height="21" rx="3" />
-                <path d="M527 35h12m-12 6h18" />
-                <rect x="580" y="78" width="35" height="24" rx="3" />
-                <path d="M587 86h12m-12 7h18" />
-                <rect x="520" y="132" width="35" height="21" rx="3" />
-                <path d="M527 140h12m-12 6h18" />
-                <circle class="network-pulse" data-pulse cx="537" cy="62" r="3" />
-              </g>
-              <g class="workshop-feedback">
-                <path
-                  data-feedback-path
-                  d="M537 89H620Q642 89 642 111V172Q642 194 620 194H153Q131 194 131 172V120"
-                />
-                <path d="m137 154-6-7-6 7" />
-                <text x="382" y="183" text-anchor="middle">FEEDBACK / NEXT ITERATION</text>
-              </g>
-              <g data-component class="workshop-component" transform="translate(131 120)">
-                <rect x="-10" y="-10" width="20" height="20" rx="3" />
-                <path d="m-4 0 3 3 5-6" />
-              </g>
-            </svg>
-            <ol class="workshop-stages">
-              <li data-station="build">
-                <span class="workshop-number">01</span><strong>Build</strong
-                ><span data-status>Assembling</span><i></i>
-              </li>
-              <li data-station="test">
-                <span class="workshop-number">02</span><strong>Test</strong
-                ><span data-status>Waiting for part</span><i></i>
-              </li>
-              <li data-station="ship">
-                <span class="workshop-number">03</span><strong>Ship</strong
-                ><span data-status>Waiting for checks</span><i></i>
-              </li>
-            </ol>
-          </figure>
         </section>
         <div class="intro">
           <p class="diamond">
@@ -246,6 +157,5 @@
       <div class="palette-help">↑ ↓ navigate <span>↵ open</span></div>
     </dialog>
     <script src="/assets/app.js?v=d10815200a08" defer></script>
-    <script type="module" src="/assets/workshop.js?v=9bfdbd85fb14"></script>
   </body>
 </html>

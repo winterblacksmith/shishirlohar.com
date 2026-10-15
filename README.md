@@ -1,6 +1,6 @@
 # Shishir Lohar — portfolio
 
-A personal, animated portfolio for shishirlohar.com. It is not a React application: it uses semantic HTML, CSS, and vanilla JavaScript, with no package installation or build step required. Nginx serves the production files. The static hosting architecture still supports live animation, search, a command palette, theme switching, and a three-stage animated workshop.
+A personal, animated portfolio for shishirlohar.com. It is not a React application: it uses semantic HTML, CSS, and vanilla JavaScript, with no package installation or build step required. Nginx serves the production files. The static hosting architecture still supports live animation, search, a command palette, theme switching, and subtle hover effects.
 
 ## Preview and checks
 
